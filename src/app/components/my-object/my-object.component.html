@@ -1,0 +1,112 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-12">
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Info boxes -->
+<div class="row">
+
+
+  <div class="col-12 col-sm-6 col-md-4" *ngFor="let o of obj.tabObjects; let i=index">
+    <div class="card back-transparent">
+      <div class="card-header text-muted border-bottom-0">
+      </div>
+      <div class="card-body pt-0">
+
+        <div id="{{o.name}}" class="carousel slide" data-ride="carousel" data-interval="false">
+          <div class="carousel-inner" style="width: 100%; max-height: 300px; min-height: 240px;">
+            <div class="carousel-item active">
+              <div class="col-sm-8 mx-auto text-center">
+                <img *ngIf="o.getState()!='OFF'" src="{{o.uriBase}}{{o.imageOnUri}}" alt="" class="img-fluid">
+                <img *ngIf="o.getState()=='OFF'" src="{{o.uriBase}}{{o.imageOffUri}}" alt="" class="img-fluid">
+                <h2 class="lead txt-white" style="font-size: 24pt;"><b>{{o.name}}</b></h2>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="col-sm-8 mx-auto text-center">
+                <h2 class="lead txt-white" style="font-size: 32pt;">Details</h2>
+
+                <div class="col-sm-12 d-flex align-items-stretch">
+                  <div class="card back-transparent" style="width: 100%;">
+                    <div class="card-header text-muted border-bottom-0">
+                    </div>
+                    <div class="card-body pt-0">
+                      <p *ngFor="let a of o.attributs" class="txt-white"><b>{{a.name}} : </b> {{a.actualValue}} </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="carousel-item">
+              <div class="col-sm-8 mx-auto text-center">
+                <h2 class="lead txt-white" style="font-size: 26pt;">Operations</h2>
+                <div class="form-group mt-4">
+                  <div class="col-sm-12">
+                    <select class="form-control border-purple" id="objectOperation" name="operationName"
+                      [(ngModel)]="opName[i]">
+                      <option value="" selected></option>
+                      <option *ngFor="let op of o.operations">{{op.name}}</option>
+                    </select>
+                  </div>
+                  <div class="col-sm-12 mt-2 mb-2">
+                    <input *ngIf="obj.getAttributeType(o.name, obj.getBodyAttributeName(o.name,opName[i]))=='String'"
+                      type="text" placeholder="Value" class="form-control border-purple" id="bodyValue" name="bodyValue"
+                      [(ngModel)]="bodyValue[i]">
+                    <input *ngIf="obj.getAttributeType(o.name, obj.getBodyAttributeName(o.name, opName[i]))=='int'"
+                      type="number" id="customRange1" class="form-control border-purple" min='0' max="15" value="0"
+                      name="bodyValue" [(ngModel)]="bodyValue[i]">
+                    <select class="form-control border-purple"
+                      *ngIf="obj.getAttributeType(o.name, obj.getBodyAttributeName(o.name, opName[i])).includes('Enumeration')"
+                      placeholder="Value" id="bodyValue" name="bodyValue" [(ngModel)]="bodyValue[i]">
+                      <option value="" selected></option>
+                      <option value="{{pv}}"
+                        *ngFor="let pv of obj.getAttributePossibleValues(o.name, obj.getBodyAttributeName(o.name, opName[i]))">
+                        {{pv}}
+                      </option>
+                    </select>
+                  </div>
+                  <button type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto"
+                    (click)="execute(o.name, opName[i], bodyValue[i]);">Execute</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <a class="carousel-control-prev" href="#{{o.name}}" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#{{o.name}}" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+</div>
+<!-- /.row -->

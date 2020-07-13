@@ -1,0 +1,61 @@
+<body class="hold-transition login-page" style="background-image: url(../../../../assets/images/Theme1/back.jpg);">
+  <div class="login-box">
+
+    <!-- /.login-logo -->
+    <div class="card box" style="background-color: transparent;">
+      <div class="card-body login-card-body back-transparent">
+        <div class="login-logo">
+          <img src="assets/images/logo.png" alt="MystroHome" class="" style="opacity: .8; height: 80px;">
+        </div>
+
+
+        <p class="login-box-msg txt-white">Sign in to start your session</p>
+
+        <p *ngIf="errorMessage!=true" class="login-box-msg txt-white text-danger">{{errorMessage}}</p>
+
+        <form action="../../index3.html" method="post">
+          <div class="input-group mb-3">
+            <input type="email" class="form-control border-purple inupt-transparent" placeholder="Email" name="mail"
+              [(ngModel)]="user.mail">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control border-purple inupt-transparent" placeholder="Password"
+              name="password" [(ngModel)]="user.password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <!-- /.col -->
+            <div class="col-4 mx-auto mt-4 mb-3">
+              <button *ngIf="users.checkLoginInfos(user.mail, user.password)==true" type="submit"
+                class="btn btn-primary btn-block  btn-transparent txt-white" routerLinkActive='active'
+                routerLink="../main/home" (click)="login()">Sign In</button>
+              <button *ngIf="users.checkLoginInfos(user.mail, user.password)!=true" type="submit"
+                class="btn btn-primary btn-block  btn-transparent txt-white" (click)="getError()">Sign In</button>
+            </div>
+            <div class="col-sm-8 mx-auto">
+              <p class="mb-0">
+
+                <a href="register.html" class="text-center txt-white" routerLinkActive='active'
+                  routerLink="../register">Register a new membership</a>
+              </p>
+            </div>
+            <!-- /.col -->
+          </div>
+        </form>
+
+
+      </div>
+      <!-- /.login-card-body -->
+    </div>
+  </div>
+  <!-- /.login-box -->
+</body>

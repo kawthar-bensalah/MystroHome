@@ -1,0 +1,107 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<div class="row">
+  <div class="col-12">
+    <div class="form-group">
+      <form class="form-horizontal text-center">
+ <div class="card back-transparent txt-white text-center">
+    <div class="card-header">
+      <h3 class="card-title">Messages</h3>      
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body table-responsive p-0">
+     
+     
+
+
+      <div class=" table-responsive" style=" height: 100%;  overflow-y: auto; max-height: 370px;" >
+        <table class="table  text-nowrap" style=" table-layout: fixed; width:100%;"> 
+          
+          <tr>
+            <td style="width: 10%;">
+              <div class="btn-group-sm mb-0">
+                <a class="btn btn-box bg-outline-navy">
+                  <div>
+                <input [checked]="tabChecked.length==tabMessages.tabMessages.length" type="checkbox"
+                value="lol" id="lol" (click)="checkAll($event);">
+                  </div>
+                </a>
+                <button type="button" class="btn btn-box bg-outline-navy btn-sm" (click)="deleteAllMessages(); "><i class="far fa-trash-alt txt-white"></i></button>
+                <button type="button" class="btn btn-box bg-outline-navy btn-sm"><i class="fas fa-sync-alt txt-white" (click)="refresh()"></i></button>       
+              <!-- /.float-right -->
+            </div> 
+            </td>
+            <th>Sender</th>
+            <th>Message</th>
+            <th>Date</th>
+           
+            
+          </tr>
+       
+         <ng-container *ngFor="let m of tab">  
+          <tbody > 
+               
+           
+            
+            <tr>
+              <td   style="width: 25% !important;">
+                <a class=" btn btn-box bg-outline-navy">
+                  <div>
+                    <div class="icheck-gradient-primary">
+                  <input [checked]="messageIsChecked(m.id)" (click)="check($event, m.id);" type="checkbox" value="{{m.id}}" id="{{m.id}}">
+                  <label for="{{m.id}}"></label>
+                 </div>
+                </div>
+                </a>
+              </td>
+              <td class="mailbox-name" style="width: 25% !important;"><b>{{users.getUserNameById(m.sender)}}</b></td>
+              <td  style="max-width: 630px;   overflow: hidden !important; text-overflow: ellipsis !important;
+               white-space: nowrap !important;  ">
+               <a *ngIf="m.text.length >80"href="#" data-toggle="modal" data-target="#modal-default" style="color:white;" (click)="text=m.text"> {{m.text}}</a>
+               <a *ngIf="m.text.length <= 80" routerLinkActive='active' routerLink="messages"  style="color:white;" (click)="text=m.text"> {{m.text}}</a>
+               
+               <div class="modal fade " id="modal-default">
+                <div class="modal-dialog back-transparent">
+                  <div class="modal-content back-main-image alignMiddle">
+                    <div class="modal-header">
+                     <h3>Message</h3>
+                    </div>
+                    <div class="p-2" style="white-space: initial;">
+                      <p style=" word-wrap: break-word; white-space: initial;" >{{text}}</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                     </div>
+                  </div>
+                  <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+              </div>
+              <!-- /.modal -->
+
+                 </td>
+            
+              <td class="mailbox-date" style="width: 18% "><i class="far fa-clock mr-1"></i>{{m.date}}</td>
+            </tr>
+         
+          </tbody>
+           </ng-container>  
+        </table>
+        <!-- /.table -->
+      </div>
+      <!-- /.mail-box-messages -->
+    </div>
+    <!-- /.card-body -->  
+  </div>
+  <!-- /.card -->
+
+</form>
+</div>
+</div>
+</div>

@@ -1,0 +1,8 @@
+<video [muted]="true" autoplay playsinline loop class="m-0 p-0" style="height: 100%; width: 100%;">
+    <source class="m-0 p-0" *ngIf="theme.currentTheme=='Theme1'" src="../../../assets/videos/theme1Intro.mp4"
+        type="video/mp4">
+    <source class="m-0 p-0" *ngIf="theme.currentTheme=='Theme2'" src="../../../assets/videos/theme2Intro.mp4"
+        type="video/mp4">
+    <source class="m-0 p-0" *ngIf="theme.currentTheme=='Theme3'" src="../../../assets/videos/theme3Intro.mp4"
+        type="video/mp4">
+</video>

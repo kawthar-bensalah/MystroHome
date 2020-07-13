@@ -1,0 +1,127 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<section class="content">
+  <div class="container-fluid">
+    <!-- row -->
+    <div class="row justify-content-center">
+      <div class="col-sm-6">
+        <div>
+          <!-- Profile Image -->
+          <div class="box box-primary justify-content-center">
+            <div class="box-body box-profile justify-content-center back-transparent">
+              <div class="text-center mb-4 mt-4">
+                <img class="profile-user-img img-responsive img-circle text-center mt-2"
+                  src="../../../assets/images/user.png" alt="User profile picture">
+              </div>
+
+
+              <ul class="list-group list-group-unbordered p-1 txt-white col-sm-8 mx-auto">
+                <li class="list-group-item" style="background-color: transparent;">
+                  <b *ngIf="set.name==false" class="ml-2 text-light">Full Name : </b>
+                  <label *ngIf="set.name==false">{{user.name}}</label>
+                  <button *ngIf="set.name==false" type="button" class="btn btn-transparent btn-xs float-right"
+                    (click)="setName()"><i class="fas fa-sliders-h"></i></button>
+                  <button
+                    *ngIf="set.name==true && (!users.userNameExist(user.name) || user.name==users.getUserByEmail(getCurrentUser()).name)"
+                    type="button" class="btn btn-transparent btn-xs float-right" (click)="validateName()"><i
+                      class="fas fa-check"></i></button>
+                  <button
+                    *ngIf="set.name==true && (users.userNameExist(user.name) && user.name!=users.getUserByEmail(getCurrentUser()).name)"
+                    type="button" class="btn btn-transparent btn-xs float-right" disabled><i
+                      class="fas fa-check"></i></button>
+                  <button *ngIf="set.name==true" type="button" class="btn btn-transparent btn-xs float-right"
+                    (click)="cancelName()"><i class="fas fa-times"></i></button>
+                  <input *ngIf="set.name==true" type="text" class="form-control border-purple inupt-transparent col-10"
+                    placeholder="New name" name="name" [(ngModel)]="user.name"
+                    [ngClass]="{'is-invalid' : users.userNameExist(user.name) && user.name!=users.getUserByEmail(getCurrentUser()).name}">
+                </li>
+                <li class="list-group-item" style="background-color: transparent;">
+                  <b class="ml-2 text-light">Mail : </b>
+                  <label>{{user.email}}</label>
+                </li>
+                <li class="list-group-item" style="background-color: transparent;">
+                  <b *ngIf="set.password==false" class="ml-2 text-light">Password : </b>
+                  <label *ngIf="set.password==false">{{passwordInvisible()}}</label>
+                  <button *ngIf="set.password==false" type="button" class="btn btn-transparent btn-xs float-right"
+                    (click)="setPassword()"><i class="fas fa-sliders-h"></i></button>
+                  <button *ngIf="set.password==true && (user.password.length>=8 && user.password==user.retypedPassword)"
+                    type="button" class="btn btn-transparent btn-xs float-right" (click)="validatePassword()"><i
+                      class="fas fa-check"></i></button>
+                  <button *ngIf="set.password==true && (user.password.length<8 || user.password!=user.retypedPassword)"
+                    type="button" class="btn btn-transparent btn-xs float-right" disabled><i
+                      class="fas fa-check"></i></button>
+                  <button *ngIf="set.password==true" type="button" class="btn btn-transparent btn-xs float-right"
+                    (click)="cancelPassword()"><i class="fas fa-times"></i></button>
+                  <input *ngIf="set.password==true" type="password"
+                    class="form-control border-purple inupt-transparent col-10 mb-1" placeholder="New password"
+                    name="password" [(ngModel)]="user.password"
+                    [ngClass]="{'is-invalid' : user.password.length>0 && user.password.length<8}">
+                  <input *ngIf="set.password==true" type="password"
+                    class="form-control border-purple inupt-transparent col-10" placeholder="Retype new password"
+                    name="retypedPassword" [(ngModel)]="user.retypedPassword"
+                    [ngClass]="{'is-invalid' : user.retypedPassword.length>0 && user.password!=user.retypedPassword}">
+                </li>
+                <button type="submit" class="btn btn-xs mt-3 mb-2 btn-transparent txt-white mx-auto" data-toggle="modal"
+                  data-target="#confirmationModel">Delete my account</button>
+              </ul>
+            </div>
+            <!-- /.box-body -->
+          </div>
+          <!-- /.box -->
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="modal fade mt-5" id="confirmationModel">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content txt-white alignMiddle" style="background-image: url({{theme.backgroundForm}});">
+
+      <div class="modal-body">
+        <!-- Horizontal Form -->
+        <div class="card card-info back-transparent txt-white m-0">
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="card-body">
+
+              <div class="form-group row">
+                Are you sure you want to delete your account ?
+              </div>
+
+              <div class="form-group row">
+                <button type="reset" class="btn btn-lg btn-transparent txt-white mx-auto"
+                  data-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" data-dismiss="modal"
+                  (click)="deleteAccount()">Delete</button>
+              </div>
+
+            </div>
+
+            <!-- /.card-body -->
+          </form>
+        </div>
+        <!-- /.card -->
+
+
+      </div>
+
+
+    </div>
+    <!-- /.modal-content -->
+
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

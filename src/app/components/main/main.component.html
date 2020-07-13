@@ -1,0 +1,260 @@
+<body class="hold-transition sidebar-mini layout-fixed">
+  <div class="wrapper">
+    <!-- Navbar -->
+    <nav *ngIf="theme" class="main-header navbar navbar-expand"
+      style="background-image: url({{theme.backgroundHeader}});">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars txt-white"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="" class="nav-link txt-white" title="Sign Out" (click)="logOut()"><i
+              class="fas fa-sign-out-alt txt-white"></i></a>
+        </li>
+      </ul>
+
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto ">
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-comments txt-white"></i>
+          </a>
+          <div class="col-sm-1 float-left dropdown-menu dropdown-menu-lg dropdown-menu-right align-self-center"
+            style="right : -50%  ;   overflow-y: auto;  max-height: 400px; background-image: url({{theme.backgroundMain}});">
+            <ng-container *ngFor="let m of tab.reverse()">
+              <a routerLinkActive='active' routerLink="messages">
+                <!-- Message Start -->
+                <div class="media p-2">
+                  <div class="media-body " style="text-overflow: ellipsis;
+                overflow: hidden;  white-space: nowrap;">
+                    <h3 class="dropdown-item-title">
+                      <b style="color : white">{{users.getUserNameById(m.sender)}}</b>
+                      <span class="float-right text-sm text-danger"><i class="fas fa-envelope text-white"></i></span>
+                    </h3>
+                    <p class="text-sm  " style="text-overflow: ellipsis;
+                  overflow: hidden;  white-space: nowrap; color : white">{{m.text}}</p>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1 "></i> {{m.date}}</p>
+                  </div>
+                </div>
+                <!-- Message End -->
+
+              </a>
+              <div class="dropdown-divider bg-white"></div>
+            </ng-container>
+            <span *ngIf="tab.length==0" class="dropdown-item dropdown-header txt-white">No Messages</span>
+
+            <div class="media pb-1 pt-1"
+              style="background-image: url({{theme.backgroundHeader}});  position: sticky; bottom:0; border-top: 0.08px solid white;">
+
+              <a href="#" class="   mt-1 mb-1 ml-3" style="   bottom:0;" routerLinkActive='active'
+                routerLink="messages">
+                <i class="fa ">
+                  <b class="text-white " style="font-size: small;">See All Messages</b>
+                </i>
+              </a>
+              <a href="#" class=" mt-1 mb-1 mr-0 ml-5 pl-4" style=" float:right;  bottom:0; " routerLinkActive='active'
+                routerLink="compose">
+                <i class="fa   ">
+                  <b class="text-white float-right" style="font-size: small">New Message</b>
+                </i>
+              </a>
+            </div>
+
+
+          </div>
+
+        </li>
+
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#" (click)="newNotifications=0">
+            <i class="far fa-bell txt-white"></i>
+            <span *ngIf="newNotifications>0" class="badge badge-danger navbar-badge">{{newNotifications}}</span>
+          </a>
+          <div class="col-sm-1 float-left dropdown-menu dropdown-menu-lg dropdown-menu-right align-self-center"
+            style="right : -10%  ;   overflow-y: auto;  max-height: 400px; background-image: url({{theme.backgroundMain}});">
+            <ng-container *ngFor="let n of notifications.tabNotifications.reverse()">
+              <a routerLinkActive='active' routerLink="messages">
+                <!-- Message Start -->
+                <div class="media p-2">
+                  <div class="media-body " style="text-overflow: ellipsis;
+        overflow: hidden;  white-space: nowrap;">
+                    <h3 class="dropdown-item-title">
+                      <b style="color : white">{{n.message}}</b>
+                      <span class="float-right text-sm text-danger"><i class="fas fa-envelope text-white"></i></span>
+                    </h3>
+                    <p class="text-sm text-muted"><i class="far fa-clock mr-1 "></i> {{n.date}}</p>
+                  </div>
+                </div>
+                <!-- Message End -->
+
+              </a>
+              <div class="dropdown-divider bg-white"></div>
+            </ng-container>
+            <span *ngIf="notifications.tabNotifications.length==0" class="dropdown-item dropdown-header txt-white">No
+              Notifications</span>
+
+            <div class="media pb-1 pt-1"
+              style="background-image: url({{theme.backgroundHeader}});  position: sticky; bottom:0; border-top: 0.08px solid white;">
+
+              <a class=" mt-1 mb-1 mr-0 ml-5 pl-4" style="bottom:0; " (click)="deleteNotifications()">
+                <i class="fa   ">
+                  <b class="text-white float-right" style="font-size: small">Delete All Notifications</b>
+                </i>
+              </a>
+            </div>
+
+
+          </div>
+
+        </li>
+
+
+
+
+      </ul>
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside *ngIf="theme" class="main-sidebar back-menu txt-white elevation-4"
+      style="background-image: url({{theme.backgroundMenu}});">
+      <!-- Brand Logo -->
+      <a href="../main/home" class="brand-link">
+        <img src="assets/images/logo.png" alt="MystroHome" class="" style="opacity: .8; height: 63px;">
+      </a>
+
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="../assets/images/user.png" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a *ngIf="users.getUserByEmail(getCurrentUser())" class="d-block txt-white" style="font-size: large;"
+              href="../main/user/profile">{{users.getUserByEmail(getCurrentUser()).name}}</a>
+          </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+
+
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                          'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                          'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="home" class="nav-link">
+                <i class="nav-icon fas fa-home txt-white"></i>
+                <p class="txt-white">
+                  Home
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                          'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                          'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="myObjects" class="nav-link">
+                <i class="nav-icon fas fa-tv txt-white"></i>
+                <p class="txt-white">
+                  My Objects
+                </p>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                          'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                          'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="editing/myScenarios" class="nav-link">
+                <i class="nav-icon fas fa-copy txt-white"></i>
+                <p class="txt-white">
+                  My Scenarios
+                </p>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                          'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                          'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="settings" class="nav-link">
+                <i class="nav-icon fas fa-cog txt-white"></i>
+                <p class="txt-white">
+                  Settings
+                </p>
+              </a>
+            </li>
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                        'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                        'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="user/profile" class="nav-link">
+                <i class="nav-icon fas fa-user txt-white"></i>
+                <p class="txt-white">
+                  My account
+                </p>
+              </a>
+            </li>
+
+            <li class="nav-item" routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+            'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+            'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="help" class="nav-link">
+                <i class="nav-icon fas fa-book txt-white"></i>
+                <p class="txt-white">
+                  Documentation
+                </p>
+              </a>
+            </li>
+            <li class="nav-item " routerLinkActive='active' [ngClass]="{'hoverEffectTheme1' : theme.currentTheme=='Theme1',
+                        'hoverEffectTheme2' : theme.currentTheme=='Theme2',
+                        'hoverEffectTheme3' : theme.currentTheme=='Theme3'}">
+              <a routerLink="about" class="nav-link">
+                <i class="nav-icon fas fa-info txt-white"></i>
+                <p class="txt-white">
+                  About us
+                </p>
+              </a>
+            </li>
+
+
+
+
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div *ngIf="theme" class="content-wrapper" style="background-image: url({{theme.backgroundMain}});">
+
+
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <router-outlet></router-outlet>
+
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <footer *ngIf="theme" class="main-footer txt-white" style="background-image: url({{theme.backgroundFooter}});">
+      <strong>Copyright &copy; 2019-2020.</strong>
+      All rights reserved.
+      <div class="float-right d-none d-sm-inline-block txt-black">
+        <b>Version</b> 1.0
+      </div>
+    </footer>
+
+
+
+
+  </div>
+  <!-- ./wrapper -->
+</body>

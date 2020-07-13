@@ -1,0 +1,39 @@
+
+  <!-- Content Header (Page header) -->
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">  
+      </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </div>
+  <!-- /.content-header -->
+
+  
+
+  <!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <!-- row -->
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="form-group">
+          <form class="form-horizontal text-center">            
+            <label class="col-form-label txt-white mb-5" for="inputSuccess">Please enter the name of your process !</label>
+            
+            <div class="form-group">
+              <label class="col-form-label txt-transparent" [ngClass]="{'text-danger' : processNameExist(processName)}" for="inputError"><i class="far fa-times-circle"></i>  This process name already exists</label>
+              <input type="text" autocomplete="off" class="form-control border-purple mb-5 col-sm-4 mx-auto inupt-transparent" [ngClass]="{'is-invalid' : processNameExist(processName)}" id="processName" placeholder="Process name" name="processName" [(ngModel)]="processName">
+            </div> 
+            <button *ngIf="!processNameExist(processName) && processName!=''" type="submit" class="btn btn-lg btn-transparent txt-white mt-5" routerLinkActive='active' routerLink="../processTriggerType" (click)="addProcessName()">Start</button>       
+            <button *ngIf="processNameExist(processName) || processName==''" disabled type="submit" class="btn btn-lg btn-transparent txt-white mt-5">Start</button>
+          </form>
+        </div>
+      </div>
+      <!-- /.col -->
+    </div>
+    <!-- /.row -->
+
+  </div><!-- /.container-fluid -->
+
+</section>
+<!-- /.content -->

@@ -1,0 +1,318 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+
+
+<!-- Main content -->
+<section class="content">
+  
+
+  <!-- /.card -->
+    <div class="container-fluid">
+      <!-- row -->
+      <div class="row">
+        <div class="card col-sm-4 back-transparent txt-white"  style="border-radius: 0;">
+          <div class="card-header icheck-gradient-danger">
+            <input type="radio" id="radioPrimary3" value="NbHours" name="triggerType"
+              (change)="triggerTypeInit('LoopHours')" checked>
+            <label for="radioPrimary3">Loop</label>
+          </div>
+          
+          <div class="card-body" [ngClass]="{'divDisabled' : !detailsType.includes('Loop')}">
+            <div class="form-group row">
+              <div class="btn-group-vertical mx-auto mb-5">
+                <button class="btn btn-tool" (click)="detailsValueUpDown('Up')"><i class="fa fa-chevron-up fa-5x"></i></button>
+                <label class="btn btn-tool btn-lg"><h1 *ngIf="detailsType.includes('Loop')">{{detailsTypeValue}}</h1></label>
+                <button class="btn btn-tool" (click)="detailsValueUpDown('Down')"><i class="fa fa-chevron-down fa-5x"></i></button>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="btn-group-toggle toggle-transparent mx-auto" data-toggle="buttons">
+                <label class="btn btn-lg" [ngClass]="{'active' : detailsType=='LoopHours'}" style="border-radius: 0;" (click)="detailsType='LoopHours'">
+                  <input type="radio" name="options" id="option1" autocomplete="off">Hours
+                </label>
+                <label class="btn btn-lg" [ngClass]="{'active' : detailsType=='LoopDays'}" style="border-radius: 0;" (click)="detailsType='LoopDays'">
+                  <input type="radio" name="options" id="option2" autocomplete="off">Days
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body-->
+        </div>
+          
+        <div class="card col-sm-4 back-transparent txt-white" style="border-radius: 0;">
+          <div class="card-header icheck-gradient-danger">
+            <input type="radio" id="radioSuccess3" value="Days" name="triggerType"
+              (change)="triggerTypeInit('Days')">
+                          <label for="radioSuccess3">Days</label>
+          </div>
+          <div class="card-body" [ngClass]="{'divDisabled' : detailsType!='Days'}">
+            <div class="form-group col-sm-12 row" >
+              <div class="btn-group-vertical btn-group-toggle mx-auto toggle-transparent" data-toggle="buttons">
+                <label class="btn btn-lg" (click)="dayClick('SU')">
+                  <input type="checkbox" name="options" id="option1" autocomplete="off">Sunday
+                </label>
+                <label class="btn btn-lg" (click)="dayClick('MO')">
+                  <input type="checkbox" name="options" id="option2" autocomplete="off">Monday
+                </label>
+                <label class="btn btn-lg" (click)="dayClick('TU')">
+                  <input type="checkbox" name="options" id="option3" autocomplete="off">Tuesday
+                </label>
+                <label class="btn btn-lg" (click)="dayClick('WE')">
+                  <input type="checkbox" name="options" id="option1" autocomplete="off" checked>Wednesday
+                </label>
+                <label class="btn btn-lg" (click)="dayClick('TH')">
+                  <input type="checkbox" name="options" id="option2" autocomplete="off">Thursday
+                </label>
+                <label class="btn btn-lg" (click)="dayClick('FR')">
+                  <input type="checkbox" name="options" id="option3" autocomplete="off">Friday
+                </label>
+                <label class="btn btn-lg" style="width: 250px;" (click)="dayClick('SA')">
+                  <input type="checkbox" name="options" id="option3" autocomplete="off">Saturday
+                </label>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body-->
+        </div>
+     
+        <div class="card col-sm-4 back-transparent txt-white" style="border-radius: 0;">
+          <div class="card-header icheck-gradient-danger">
+            <input type="radio" id="radioSuccess4" value="Dates" name="triggerType"
+              (change)="triggerTypeInit('Dates')">
+            <label for="radioSuccess4">Dates</label>
+          </div>
+          <div class="card-body" [ngClass]="{'divDisabled' : detailsType!='Dates'}">
+             
+            <!--CALANDER-->
+            <div class="card back-transparent" style="position: relative; left: 0px; top: 0px;">
+              <div class="card-header border-0 ui-sortable-handle" style="cursor: move;">  
+                <h3 class="card-title">
+                  <i class="far fa-calendar-alt"></i>
+                </h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body pt-0">
+                     <!--The calendar -->
+                <div id="calendar" style="width: 100%">
+                    <div class="bootstrap-datetimepicker-widget usetwentyfour">
+                      <ul class="list-unstyled">
+                        <li class="show">
+                          <div class="datepicker">
+                            <div class="datepicker-days">
+                              <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th class="prev" data-action="previousYear" (click)="year=year-1">
+                                          <span class="fa fa-chevron-left" title="Previous Month"></span>
+                                        </th>
+                                        <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">
+                                            {{year}}
+                                        </th>
+                                        <th class="next" data-action="nextYear" (click)="year=year+1">
+                                            <span class="fa fa-chevron-right" title="Next Month"></span>
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <th class="prev" data-action="previousMonth" (click)="month=((month-1)+12)%12">
+                                          <span class="fa fa-chevron-left" title="Previous Month"></span>
+                                        </th>
+                                        <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Month">
+                                            {{monthTab[month]}}
+                                        </th>
+                                        <th class="next" data-action="nextMonth" (click)="month=(month+1)%12">
+                                            <span class="fa fa-chevron-right" title="Next Month"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="day"><div (click)="addNewDate('01')">1</div></td>
+                                        <td class="day"><div (click)="addNewDate('02')">2</div></td>
+                                        <td class="day"><div (click)="addNewDate('03')">3</div></td>
+                                        <td class="day"><div (click)="addNewDate('04')">4</div></td>
+                                        <td class="day"><div (click)="addNewDate('05')">5</div></td>
+                                        <td class="day"><div (click)="addNewDate('06')">6</div></td>
+                                        <td class="day"><div (click)="addNewDate('07')">7</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="day"><div (click)="addNewDate('08')">8</div></td>
+                                        <td class="day"><div (click)="addNewDate('09')">9</div></td>
+                                        <td class="day"><div (click)="addNewDate('10')">10</div></td>
+                                        <td class="day"><div (click)="addNewDate('11')">11</div></td>
+                                        <td class="day"><div (click)="addNewDate('12')">12</div></td>
+                                        <td class="day"><div (click)="addNewDate('13')">13</div></td>
+                                        <td class="day"><div (click)="addNewDate('14')">14</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="day"><div (click)="addNewDate('15')">15</div></td>
+                                        <td class="day"><div (click)="addNewDate('16')">16</div></td>
+                                        <td class="day"><div (click)="addNewDate('17')">17</div></td>
+                                        <td class="day"><div (click)="addNewDate('18')">18</div></td>
+                                        <td class="day"><div (click)="addNewDate('19')">19</div></td>
+                                        <td class="day"><div (click)="addNewDate('20')">20</div></td>
+                                        <td class="day"><div (click)="addNewDate('21')">21</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="day"><div (click)="addNewDate('22')">22</div></td>
+                                        <td class="day"><div (click)="addNewDate('23')">23</div></td>
+                                        <td class="day"><div (click)="addNewDate('24')">24</div></td>
+                                        <td class="day"><div (click)="addNewDate('25')">25</div></td>
+                                        <td class="day"><div (click)="addNewDate('26')">26</div></td>
+                                        <td class="day"><div (click)="addNewDate('27')">27</div></td>
+                                        <td class="day"><div (click)="addNewDate('28')">28</div></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="day"><div (click)="addNewDate('29')">29</div></td>
+                                        <td class="day"><div (click)="addNewDate('30')">30</div></td>
+                                        <td class="day"><div (click)="addNewDate('31')">31</div></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="datepicker-months" style="display: none;">
+                            <table class="table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="prev" data-action="previous">
+                                            <span class="fa fa-chevron-left" title="Previous Year"></span>
+                                        </th>
+                                        <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Year">
+                                            2019
+                                        </th>
+                                        <th class="next" data-action="next">
+                                            <span class="fa fa-chevron-right" title="Next Year"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span data-action="selectMonth" class="month">Jan</span>
+                                            <span data-action="selectMonth" class="month">Feb</span>
+                                            <span data-action="selectMonth" class="month">Mar</span>
+                                            <span data-action="selectMonth" class="month">Apr</span>
+                                            <span data-action="selectMonth" class="month">May</span>
+                                            <span data-action="selectMonth" class="month">Jun</span>
+                                            <span data-action="selectMonth" class="month">Jul</span>
+                                            <span data-action="selectMonth" class="month">Aug</span>
+                                            <span data-action="selectMonth" class="month">Sep</span>
+                                            <span data-action="selectMonth" class="month">Oct</span>
+                                            <span data-action="selectMonth" class="month">Nov</span>
+                                            <span data-action="selectMonth" class="month">Dec</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="datepicker-years" style="display: none;">
+                            <table class="table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="prev" data-action="previous">
+                                            <span class="fa fa-chevron-left" title="Previous Decade"></span>
+                                        </th>
+                                        <th class="picker-switch" data-action="pickerSwitch" colspan="5" title="Select Decade">
+                                            2010-2019
+                                        </th>
+                                        <th class="next" data-action="next">
+                                            <span class="fa fa-chevron-right" title="Next Decade"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span data-action="selectYear" class="year old">2009</span>
+                                            <span data-action="selectYear" class="year">2010</span>
+                                            <span data-action="selectYear" class="year">2011</span>
+                                            <span data-action="selectYear" class="year">2012</span>
+                                            <span data-action="selectYear" class="year">2013</span>
+                                            <span data-action="selectYear" class="year">2014</span>
+                                            <span data-action="selectYear" class="year">2015</span>
+                                            <span data-action="selectYear" class="year">2016</span>
+                                            <span data-action="selectYear" class="year">2017</span>
+                                            <span data-action="selectYear" class="year">2018</span>
+                                            <span data-action="selectYear" class="year">2019</span>
+                                            <span data-action="selectYear" class="year old">2020</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="datepicker-decades" style="display: none;">
+                            <table class="table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th class="prev" data-action="previous">
+                                            <span class="fa fa-chevron-left" title="Previous Century"></span>
+                                        </th>
+                                        <th class="picker-switch" data-action="pickerSwitch" colspan="5">
+                                            2000-2090
+                                        </th>
+                                        <th class="next" data-action="next">
+                                            <span class="fa fa-chevron-right" title="Next Century"></span>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td colspan="7">
+                                            <span data-action="selectDecade" class="decade old" data-selection="2006">1990</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2006">2000</span>
+                                            <span data-action="selectDecade" class="decade active" data-selection="2016">2010</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2026">2020</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2036">2030</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2046">2040</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2056">2050</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2066">2060</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2076">2070</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2086">2080</span>
+                                            <span data-action="selectDecade" class="decade" data-selection="2096">2090</span>
+                                            <span data-action="selectDecade" class="decade old" data-selection="2106">2100</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </li>
+                <li class="picker-switch accordion-toggle"></li>
+                      </ul>
+                    </div>
+                </div>
+              </div>
+           </div> 
+           <textarea  *ngIf="detailsType=='Dates'" class="form-control border-purple col-sm-12 inupt-transparent" id="datePicker"
+                placeholder="" name="detailsTypeValue" [(ngModel)]="detailsTypeValue" rows="2">
+              </textarea>
+               </div>
+          <!-- /.card-body-->
+        </div>
+  
+        <div class="col-sm-12">
+          <div class="form-group">
+            <form class="form-horizontal ">
+              <div class="text-center mb-3">
+                <button type="submit" class="btn btn-lg btn-transparent" routerLinkActive='Active' routerLink="../saveExecuteProcess" (click)="addProcessTriggerDetails()">Next</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+  
+    </div><!-- /.container-fluid -->
+  
+  
+  
+  
+  </section>
+  <!-- /.content -->

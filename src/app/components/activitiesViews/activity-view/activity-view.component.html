@@ -1,0 +1,103 @@
+<div class="time-label" *ngIf="act.triggerEvent=='At'">
+  <span [ngClass]="{'startColorTheme1' : theme.currentTheme=='Theme1',
+                'startColorTheme2' : theme.currentTheme=='Theme2',
+                'startColorTheme3' : theme.currentTheme=='Theme3'}">
+    {{act.date}}</span>
+</div>
+<div class="time-label ml-2" *ngIf="act.triggerEvent=='After' && act.timeout>0">
+  <span [ngClass]="{'afterColorTheme1' : theme.currentTheme=='Theme1',
+    'afterColorTheme2' : theme.currentTheme=='Theme2',
+    'afterColorTheme3' : theme.currentTheme=='Theme3'}">+ {{act.timeout}} Minutes</span>
+</div>
+<div class="time-label" *ngIf="act.triggerEvent=='Independent'">
+  <span [ngClass]="{'startColorTheme1' : theme.currentTheme=='Theme1',
+    'startColorTheme2' : theme.currentTheme=='Theme2',
+    'startColorTheme3' : theme.currentTheme=='Theme3'}">Start Activity</span>
+</div>
+
+
+<div>
+  <div class="timeline-item" style="background-color: transparent;">
+    <div class="card collapsed-card back-transparent flex-nowrap">
+      <div class="card-header pt-1 pb-1" style="white-space: nowrap; overflow-x: auto; ">
+        <h3 class="card-title">{{act.name}}<ng-container *ngIf="act.type=='Activity' || act.type=='New Activity'"> :
+            {{act.operationName}} {{act.objectName}}</ng-container>
+        </h3>
+        <div class="card-tools">
+          <button *ngIf="act.type!='Activity' && act.type!='Created activity' && act.type!='New Activity'" type="button"
+            class="btn btn-tool pt-0 pb-0" data-card-widget="collapse"><i class="fas fa-plus"></i>
+          </button>
+          <button *ngIf="act.type!='Created activity' && act.type!='New Activity'" type="button"
+            class="btn btn-tool pt-0 pb-0" data-card-widget="collapse" (click)="removeActivity()"><i
+              class="fas fa-times"></i>
+          </button>
+        </div>
+        <!-- /.card-tools -->
+      </div>
+      <!-- /.card-header -->
+      <div class="card-body pt-2 pb-1" style="display: none;">
+        <ng-container *ngIf="act.type=='Parallel Activities' && act.subActivities.length>0">
+          <div class="timeline">
+            <div class="time-label">
+              <span [ngClass]="{'whenColorTheme1' : theme.currentTheme=='Theme1',
+                    'whenColorTheme2' : theme.currentTheme=='Theme2',
+                    'whenColorTheme3' : theme.currentTheme=='Theme3'}">Activities</span>
+            </div>
+            <app-activity-view *ngFor="let sa of act.subActivities" [act]="sa" class="timeline"></app-activity-view>
+            <div>
+              <i class="fas fa-clock bg-gray"></i>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="act.type=='Conditional Activities'">
+          <div class="timeline">
+            <div class="time-label">
+              <span [ngClass]="{'whenColorTheme1' : theme.currentTheme=='Theme1',
+                    'whenColorTheme2' : theme.currentTheme=='Theme2',
+                    'whenColorTheme3' : theme.currentTheme=='Theme3'}">When {{act.ifCondition}}</span>
+            </div>
+            <app-activity-view *ngIf="act.ifActivity!=null" [act]="act.ifActivity" class="timeline"></app-activity-view>
+            <div class="time-label" *ngIf="act.elseActivity!=null">
+              <ng-container *ngIf="act.elseActivity!='null'">
+                <span [ngClass]="{'whenColorTheme1' : theme.currentTheme=='Theme1',
+                    'whenColorTheme2' : theme.currentTheme=='Theme2',
+                    'whenColorTheme3' : theme.currentTheme=='Theme3'}">Otherwise</span>
+              </ng-container>
+            </div>
+            <ng-container *ngIf="act.elseActivity!=null">
+              <app-activity-view *ngIf="act.elseActivity!='null'" [act]="act.elseActivity" class="timeline">
+              </app-activity-view>
+            </ng-container>
+            <div>
+              <i class="fas fa-clock bg-gray"></i>
+            </div>
+          </div>
+        </ng-container>
+        <ng-container *ngIf="act.type=='Loop Activities'">
+          <div class="timeline">
+            <div class="time-label" *ngIf="act.loopActivity!=null">
+              <span [ngClass]="{'whenColorTheme1' : theme.currentTheme=='Theme1',
+                    'whenColorTheme2' : theme.currentTheme=='Theme2',
+                    'whenColorTheme3' : theme.currentTheme=='Theme3'}">While {{act.loopCondition}}</span>
+            </div>
+            <app-activity-view *ngIf="act.loopActivity!=null" [act]="act.loopActivity" class="timeline">
+            </app-activity-view>
+            <div>
+              <i class="fas fa-clock bg-gray"></i>
+            </div>
+          </div>
+        </ng-container>
+
+
+      </div>
+      <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+
+
+
+  </div>
+</div>
+
+
+<app-activity-view [act]="aa" *ngFor="let aa of getAllact(act)" class="timeline"></app-activity-view>

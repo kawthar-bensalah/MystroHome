@@ -1,0 +1,370 @@
+<!-- Horizontal Form -->
+<div class="card card-info back-transparent txt-white" style="overflow-x: auto; height: 100%; position: relative; overflow-y: auto; max-height: 370px;">
+  <!-- /.card-header -->
+  <!-- form start -->
+  <form class="form-horizontal" #formCond="ngForm" (ngSubmit)="addNewActivity(formCond)">
+    <div class="card-body">
+      <div class="form-group row">
+        <label for="activityName" class="col-sm-2 col-form-label">Name</label>
+        <div class="col-sm-10">
+          <input type="text" placeholder="Name" class="inupt-transparent form-control" id="activityName" name="name"
+            [(ngModel)]="act.name" [ngClass]="{'is-invalid' : activityNameExist(act.name)}">
+        </div>
+      </div>
+     
+      <fieldset class="form-group text-center fieldset conditionBuilder">
+        <legend class="col-form-label">
+          <h3 class="card-title">
+              Condition Builder
+          </h3>
+        </legend>
+        <div class="row col-sm-10 mx-auto justify-content-center p-1"
+          style="background:rgb(216, 215, 215) ;  border-top: 1px solid rgb(150, 146, 146); border-right: 1px solid rgb(150, 146, 146);  border-left: 1px solid rgb(150, 146, 146);">
+          <button type="button" class="btn btn-sm btn-transparent" data-widget="reset" data-toggle="tooltip" title="RESET"
+            (click)=" act.loopCondition=''; b=true;">
+            <i class="fa" aria-hidden="true">RESET</i></button>
+          <span class="btn-separator w5">&nbsp;|&nbsp; </span>
+          <button type="button" class="btn btn-sm btn-transparent" data-toggle="tooltip" title="open parenthesis"
+            (click)=" act.loopCondition=act.loopCondition+'('">
+            <i class="fa">(</i></button>
+          <span class="btn-separator w5 h75">&nbsp;|&nbsp; </span>
+          <button type="button" class="btn btn-sm btn-transparent" data-toggle="tooltip" title="close parenthesis"
+            (click)=" act.loopCondition=act.loopCondition+')'">
+            <i class="fa ">)</i></button>
+          <span class="btn-separator w5">&nbsp;|&nbsp; </span>
+          <button type="button" class="btn btn-sm btn-transparent" data-toggle="tooltip" title="AND Operator"
+            (click)=" act.loopCondition=act.loopCondition+' and '">
+            <i class="fa ">AND</i></button>
+          <span class="btn-separator w5">&nbsp;|&nbsp; </span>
+          <button type="button" class="btn btn-sm btn-transparent" data-widget="or" data-toggle="tooltip" title="OR Operator"
+            (click)=" act.loopCondition=act.loopCondition+' or '">
+            <i class="fa ">OR </i></button>
+          <span class="btn-separator w5">&nbsp;|&nbsp; </span>
+          <button type="button" class="btn btn-sm btn-transparent" data-widget="not" data-toggle="tooltip" title="NOT Operator"
+            (click)=" act.loopCondition=act.loopCondition+'!'">
+            <i class="fa ">NOT</i></button>
+        </div>
+        <div class=" col-sm-10 mx-auto justify-content-center p-1"
+          style=" background: rgb(216, 215, 215);  border-right: 1px solid rgb(150, 146, 146);  border-left: 1px solid rgb(150, 146, 146); ">
+          <button type="button" class="btn btn-sm btn-transparent" data-widget="Help" data-toggle="modal" data-target="#modal-sm"
+          title="help">
+            <i class="fa fa-question fa-sm"></i></button>
+
+            
+            <div class="modal back-transparent" id="modal-sm" >
+              <div class="modal-dialog modal-sm ">
+                <div class="modal-content"
+                style="background-image: url({{theme.backgroundForm}});">
+                  <div class="modal-header">
+                    <h4 class="modal-title">Help</h4>
+                  
+                  </div>
+                  <div class="modal-body justify-content-normal">
+                    <p>the structure of a simple condition is as follows : <br> 'Attribut' 'Operator' 'Value' <br><br> you can add parenthesis or logical connectors in order to combine conditions. </p>
+                  </div>
+                  <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-lg  btn-transparent txt-white mx-auto" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+              </div>
+              <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal -->
+
+
+          
+          <span class="btn-separator w5"> &nbsp;|&nbsp; </span>
+          <button type="button"  (click)=" act.loopCondition=act.loopCondition+' \n '"  class="btn btn-sm btn-transparent" data-widget="Help" data-toggle="tooltip" title="New line">
+            <i class="fa fa-undo fa-sm"></i></button>
+          <span class="btn-separator w5"> &nbsp;|&nbsp; </span>
+          <select id="objectName" class="w30" name="objectName" [(ngModel)]="cond.objectName" title="Objects">
+            <option hidden value="" disabled selected><i class="fa">Objects</i></option>
+            <option value=" " selected></option>
+            <option *ngFor="let o of obj.tabObjects">{{o.name}}</option>
+          </select>
+        </div>
+        <div class=" col-sm-10 mx-auto  p-1"
+          style=" background:rgb(216, 215, 215) ; border-bottom: 1px solid rgb(150, 146, 146);  border-right: 1px solid rgb(150, 146, 146);  border-left: 1px solid rgb(150, 146, 146); ">
+          <select id="objectAttribute" class="w30" name="attributeName" [(ngModel)]="cond.attribute" title="Attributs">
+            <option hidden value="" disabled selected>Attributs</option>
+            <option value=" " selected></option>
+            <ng-container *ngFor="let o of obj.tabObjects">
+              <ng-container *ngIf="o.name==cond.objectName">
+                <option *ngFor="let a of o.attributs">{{a.name}}</option>
+              </ng-container>
+            </ng-container>
+          </select>
+          <span class="btn-separator w5"> &nbsp;|&nbsp; </span>
+          <select id="objectValue" name="attributeOperator" [(ngModel)]="cond.operator" title="Operators"><i
+              class="fa-chart-bar"></i>
+            <option hidden value="" disabled selected>Operators</option>
+            <option value="=" selected>=</option>
+            <option value="!=">!=</option>
+            <option value="&lt;" *ngIf="!obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')">
+              &lt;
+            </option>
+            <option value="&lt;="
+              *ngIf="!obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')">
+              &lt;=</option>
+            <option value="&gt;" *ngIf="!obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')">
+              &gt;
+            </option>
+            <option value="&gt;="
+              *ngIf="!obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')">
+              &gt;=</option>
+            <option value="&gt;="
+              *ngIf="!obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')">
+              &gt;=</option>
+          </select>
+          <span class="btn-separator w5"> &nbsp;|&nbsp; </span>
+          <select class="w30" *ngIf="obj.getAttributeType(cond.objectName, cond.attribute).includes('Enumeration')"
+            placeholder="values" id="conditionValue" name="conditionValue" [(ngModel)]="cond.value" title="Values">
+            <option hidden value="" disabled selected>Values</option>
+            <option value="" selected></option>
+            <option value="'{{pv}}'" *ngFor="let pv of obj.getAttributePossibleValues(cond.objectName, cond.attribute)">
+              {{pv}}
+            </option>
+          </select>
+          <input *ngIf="obj.getAttributeType(cond.objectName, cond.attribute)=='int'" type="number" min="0"
+            placeholder="Value" class="w20" id="conditionValue" name="conditionValue" [(ngModel)]="cond.value">
+          <span class="btn-separator w5"> &nbsp;|&nbsp; </span>
+          <button *ngIf="cond.value!=''" type="button" class="btn btn-xs box btn-transparent" data-widget="collapse"
+          data-toggle="tooltip" title="Condition" (click)="addCondition()">
+          <i class="fa  fa-check" aria-hidden="true"></i></button>
+      
+          </div>
+        <div class="row col-10 mx-auto p-1 mb-1">
+          <form class="w-100">
+            <textarea class="form-control inupt-transparent" id="editor1" name="editor1" [(ngModel)]="act.loopCondition"
+              rows="7" [ngClass]="{'is-invalid' : check()==false}">
+                </textarea>
+          </form>
+        </div>
+      </fieldset>
+
+
+      <!--Add Activity *ngIf="act.type=='LOOP Activities' -->
+      <div class="row">
+        <div class="col-12">
+          <!-- jQuery Knob -->
+          <div class="card back-transparent txt-white">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="far fa-chart-bar"></i>
+                Activity
+              </h3>
+
+              <div class="card-tools">
+                <button  *ngIf="act.loopActivity==null" type="button" class="btn" data-toggle="modal" data-target="#activityModalForLoop">
+                  <i class="fas fa-plus txt-white"></i>
+                </button>
+                <button type="button" class="btn" data-card-widget="collapse">
+                  <i class="fas fa-minus txt-white"></i>
+                </button>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+              <!-- form start -->
+              <form class="form-horizontal">
+                
+                <app-activity-view *ngIf="act.loopActivity!=null" [act]="act.loopActivity"></app-activity-view>
+
+                <!-- /.card-body -->
+
+              </form>
+
+
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+        <!-- /.col -->
+
+      </div>
+      
+
+      <fieldset class="form-group text-center fieldset">
+        <legend class="col-form-label">
+          <label for="inputEmail3">
+            <div class="btn-group mx-auto" data-toggle="buttons">
+              <label *ngIf="bpelProcess.processType=='On demande'" class="btn btn-light form-check-label" (click)="afterClick()">      
+                <input class="custom-control-input inupt-transparent" type="radio" id="After" name="triggerRadio"
+                  value="After"> After
+              </label>
+              <label *ngIf="bpelProcess.processType!='On demande'" class="btn btn-light form-check-label"  (click)="act.triggerEvent='After'">
+                <input class="custom-control-input inupt-transparent" type="radio" id="After" name="triggerRadio"
+                      [(ngModel)]="act.triggerEvent" value="After"> After
+              </label>
+              <label *ngIf="bpelProcess.processType!='On demande'" class="btn btn-light form-check-label active" (click)="act.triggerEvent='At'">
+                <input class="custom-control-input inupt-transparent" type="radio" checked id="At" name="triggerRadio"
+                      [(ngModel)]="act.triggerEvent" value="At"> At
+              </label>
+            </div>  
+          </label>
+        </legend>
+        <div class="form-group row mx-auto">
+            <!------------- AFTER -------------->
+            <div class="col-sm-5" *ngIf="act.triggerEvent=='After'">
+              <select class="form-control inupt-transparent" name="activityAfter" [(ngModel)]="act.dependsActivityName">
+                <option value="" selected></option>
+                <option *ngFor="let a of acts.getAfterActivities(); let i = index;">{{a}}</option>
+              </select>
+            </div>
+            <label for="timeout" class="col-sm-3 col-form-label" *ngIf="act.triggerEvent=='After'">Timeout</label>
+            <div class="col-sm-2" *ngIf="act.triggerEvent=='After'">
+              <input type="number" min="0" placeholder="Min" class="form-control inupt-transparent" id="timeout" name="timeout"
+                [(ngModel)]="act.timeout">
+            </div>
+            <label class="col-sm-2 col-form-label" *ngIf="act.triggerEvent=='After'">min</label>
+            <!------------- AT -------------->
+            <div class="col-sm-12" *ngIf="act.triggerEvent=='At'">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="far fa-clock"></i></span>
+                </div>
+                <input *ngIf="bpelProcess.processType!='Programmable'" [disabled]="bpelProcess.processType=='On demande'" type="datetime-local" class="form-control inupt-transparent" id="date" name="date"
+                  [(ngModel)]="act.date">
+                  <input *ngIf="bpelProcess.processType=='Programmable'" type="time" class="form-control inupt-transparent" id="time" name="time"
+                  [(ngModel)]="act.date">
+              </div>
+              <!-- /.input group -->
+            </div>
+        </div>
+      </fieldset>
+
+      <div class="form-group row">
+        <button type="reset" class="btn btn-lg btn-transparent txt-white mx-auto" (click)="deleteLoopActivity(); act.loopCondition='';">Reset</button>
+        <button *ngIf="AllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto">Add</button>
+        <button *ngIf="!AllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" disabled>Add</button></div>
+    </div>
+
+    <!-- /.card-body -->
+ 
+  </form>
+</div>
+<!-- /.card -->
+
+
+
+
+
+
+
+
+<div class="modal fade" id="activityModalForLoop">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content txt-white alignMiddle"
+      style="background-image: url({{theme.backgroundForm}});">
+      <div class="modal-header">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Add</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="choice" name="choice" [(ngModel)]="loopActivity.type">
+              <option>New Activity</option>
+              <option>Created activity</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Horizontal Form -->
+        <div class="card card-info back-transparent txt-white">
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="card-body">
+              <div class="form-group row" *ngIf="loopActivity.type=='New Activity'">
+                <label for="activityName" class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                  <input type="text" placeholder="Name" class="form-control border-purple" id="activityName" name="name"
+                    [(ngModel)]="loopActivity.name" [ngClass]="{'is-invalid' : loopActActivityNameExist(loopActivity.name)}">
+                </div>
+              </div>
+             
+              <div class="form-group row" *ngIf="loopActivity.type=='New Activity'">
+                <label for="objectOperation" class="col-sm-4 col-form-label">Object</label>
+                <div class="col-sm-8 float-right">
+                  <select class="form-control border-purple" id="objectName" name="objectName"
+                    [(ngModel)]="loopActivity.objectName">
+                    <option value="" selected></option>
+                    <option *ngFor="let o of obj.tabObjects">{{o.name}}</option>
+                  </select>
+                </div>      
+              </div>
+
+              <div class="form-group row" *ngIf="loopActivity.type=='New Activity'">
+                <label for="objectOperation" class="col-sm-4 col-form-label">Operation</label>
+                <div class="col-sm-8 float-right">
+                  <select class="form-control border-purple" id="objectOperation" name="operationName"
+                    [(ngModel)]="loopActivity.operationName">
+                    <option value="" selected></option>
+                    <ng-container *ngFor="let o of obj.tabObjects">
+                      <ng-container *ngIf="o.name==loopActivity.objectName">
+                        <option *ngFor="let op of o.operations">{{op.name}}</option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
+                </div>    
+              </div>
+
+              <div class="form-group row" *ngIf="obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName)!=null">
+                <label for="bodyValue"
+                  class="col-sm-4 col-form-label">{{obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName)}}</label>
+                <div class="col-sm-8">
+                  <input *ngIf="obj.getAttributeType(loopActivity.objectName, obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName))=='String'"
+                    type="text" placeholder="Value" class="form-control border-purple" id="bodyValue" name="bodyValue"
+                    [(ngModel)]="loopActivity.bodyValue">
+                  <input *ngIf="obj.getAttributeType(loopActivity.objectName, obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName))=='int'" 
+                    type="range" class="custom-range custom-range-fuchsia col-sm-11 mt-3" id="customRange1" min='0' max="15" value="0" step="1"
+                    name="bodyValue" [(ngModel)]="loopActivity.bodyValue">&nbsp;&nbsp;{{loopActivity.bodyValue}}
+                  <select class="form-control border-purple" *ngIf="obj.getAttributeType(loopActivity.objectName, obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName)).includes('Enumeration')"
+                    placeholder="Value" id="bodyValue" name="bodyValue" [(ngModel)]="loopActivity.bodyValue">
+                    <option value="" selected></option>
+                    <option value="{{pv}}" *ngFor="let pv of obj.getAttributePossibleValues(loopActivity.objectName, obj.getBodyAttributeName(loopActivity.objectName, loopActivity.operationName))">{{pv}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group row" *ngIf="loopActivity.type=='Created activity'">
+                <label for="activityCreatedName" class="col-sm-4 col-form-label">Activity name</label>
+                <div class="col-sm-8">
+                  <select class="form-control border-purple" id="activityCreatedName" name="activityCreatedName"
+                    [(ngModel)]="loopActivity.name">
+                    <option value="" selected></option>
+                    <option *ngFor="let a of acts.getCreatedActivities(); let i = index;">{{a}}</option>                    </select>
+                </div>
+
+              </div>
+
+              <div class="form-group row">
+                <button type="reset" class="btn btn-lg btn-transparent txt-white mx-auto">Reset</button>
+                <button *ngIf="loopActAllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" data-dismiss="modal" (click)="addLoopActivity()">Add</button>
+                <button *ngIf="!loopActAllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" disabled>Add</button>
+              </div>
+
+            </div>
+
+            <!-- /.card-body -->
+          </form>
+        </div>
+        <!-- /.card -->
+
+
+      </div>
+
+
+    </div>
+    <!-- /.modal-content -->
+
+  </div>
+  <!-- /.modal-dialog -->    
+</div>
+<!-- /.modal -->

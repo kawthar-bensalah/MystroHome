@@ -1,0 +1,254 @@
+<div>
+  <!-- Horizontal Form -->
+  <div class="card card-info back-transparent txt-white">
+    <!-- /.card-header -->
+    <!-- form start -->
+    <form class="form-horizontal" #formPara="ngForm" (ngSubmit)="addNewActivity(formPara)">
+      <div class="card-body">
+        <div class="form-group row">
+          <label for="activityName" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" autocomplete="off" placeholder="Name" class="form-control inupt-transparent" id="activityName" name="name"
+              [(ngModel)]="act.name" [ngClass]="{'is-invalid' : activityNameExist(act.name)}">
+          </div>
+        </div>
+     
+        <!--Add new Activities *ngIf="act.type=='Parallel Activities' -->
+        <div class="row" *ngIf="act.type=='Parallel Activities'">
+          <div class="col-12">
+            <!-- jQuery Knob -->
+            <div class="card back-transparent txt-white">
+              <div class="card-header">
+                <h3 class="card-title">
+                  <i class="far fa-chart-bar"></i>
+                  Activities
+                </h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn" data-toggle="modal" data-target="#subActivityModel">
+                    <i class="fas fa-plus txt-white"></i>
+                  </button>
+                  <button type="button" class="btn" data-card-widget="collapse">
+                    <i class="fas fa-minus txt-white"></i>
+                  </button>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <!-- form start -->
+                <form class="form-horizontal">          
+                  <app-activity-view *ngFor="let a of act.subActivities" [act]="a"></app-activity-view>
+                  <!-- /.card-body -->
+                </form>
+
+
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+
+        </div>
+
+
+        <fieldset class="form-group text-center fieldset">
+          <legend class="col-form-label">
+            <label for="inputEmail3">
+              <div class="btn-group mx-auto" data-toggle="buttons">
+                <label *ngIf="bpelProcess.processType=='On demande'" class="btn btn-light form-check-label" (click)="afterClick()">      
+                  <input class="custom-control-input inupt-transparent" type="radio" id="After" name="triggerRadio"
+                    value="After"> After
+                </label>
+                <label *ngIf="bpelProcess.processType!='On demande'" class="btn btn-light form-check-label"  (click)="act.triggerEvent='After'">
+                  <input class="custom-control-input inupt-transparent" type="radio" id="After" name="triggerRadio"
+                        [(ngModel)]="act.triggerEvent" value="After"> After
+                </label>
+                <label *ngIf="bpelProcess.processType!='On demande'" class="btn btn-light form-check-label active" (click)="act.triggerEvent='At'">
+                  <input class="custom-control-input inupt-transparent" type="radio" checked id="At" name="triggerRadio"
+                        [(ngModel)]="act.triggerEvent" value="At"> At
+                </label>
+              </div>  
+            </label>
+          </legend>
+          <div class="form-group row mx-auto">
+              <!------------- AFTER -------------->
+            <div class="col-sm-5" *ngIf="act.triggerEvent=='After'">
+              <select class="form-control inupt-transparent" name="activityAfter" [(ngModel)]="act.dependsActivityName">
+                <option value="" selected></option>
+                <option *ngFor="let a of acts.getAfterActivities(); let i = index;">{{a}}</option>
+              </select>
+            </div>
+            <label for="timeout" class="col-sm-3 col-form-label" *ngIf="act.triggerEvent=='After'">Timeout</label>
+            <div class="col-sm-2" *ngIf="act.triggerEvent=='After'">
+              <input type="number" min="0" placeholder="Min" class="form-control inupt-transparent" id="timeout" name="timeout"
+                [(ngModel)]="act.timeout">
+            </div>
+            <label class="col-sm-2 col-form-label" *ngIf="act.triggerEvent=='After'">min</label>
+            <!------------- AT -------------->
+              <div class="col-sm-12" *ngIf="act.triggerEvent=='At'">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                  </div>
+                  <input *ngIf="bpelProcess.processType!='Programmable'" type="datetime-local" class="form-control inupt-transparent" id="date" name="date"
+                    [(ngModel)]="act.date">
+                    <input *ngIf="bpelProcess.processType=='Programmable'" type="time" class="form-control inupt-transparent" id="time" name="time"
+                    [(ngModel)]="act.date">
+                </div>
+                <!-- /.input group -->
+              </div>
+          </div>
+        </fieldset>
+
+        <div class="form-group row">
+          <button type="reset" class="btn btn-lg btn-transparent txt-white mx-auto" (click)="deleteSubActivities();">Reset</button>
+          <button *ngIf="AllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto">Add</button>
+          <button *ngIf="!AllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" disabled>Add</button>        </div>
+      </div>
+
+     
+    </form>
+  </div>
+  <!-- /.card -->
+
+</div>
+
+
+
+<div class="modal fade" id="subActivityModel">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content txt-white alignMiddle"
+      style="background-image: url({{theme.backgroundForm}});">
+      <div class="modal-header">
+        <div class="form-group row">
+          <label class="col-sm-4 col-form-label">Add</label>
+          <div class="col-sm-8">
+            <select class="form-control" id="choice" name="choice" [(ngModel)]="subAct.type">
+              <option>New Activity</option>
+              <option>Created activity</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Horizontal Form -->
+        <div class="card card-info back-transparent txt-white">
+          <!-- /.card-header -->
+          <!-- form start -->
+          <form class="form-horizontal">
+            <div class="card-body">
+              <div class="form-group row" *ngIf="subAct.type=='New Activity'">
+                <label for="activityName" class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                  <input type="text" autocomplete="off" placeholder="Name" class="form-control border-purple" id="activityName" name="name"
+                    [(ngModel)]="subAct.name" [ngClass]="{'is-invalid' : subActActivityNameExist(subAct.name)}">
+                </div>
+              </div>
+              <div class="form-group row" *ngIf="subAct.type=='New Activity'">
+                <label for="objectOperation" class="col-sm-4 col-form-label">Object</label>
+                <div class="col-sm-8 float-right">
+                  <select class="form-control border-purple" id="objectName" name="objectName"
+                    [(ngModel)]="subAct.objectName">
+                    <option value="" selected></option>
+                    <option *ngFor="let o of obj.tabObjects">{{o.name}}</option>
+                  </select>
+                </div>      
+              </div>
+              <div class="form-group row" *ngIf="subAct.type=='New Activity'">
+                <label for="objectOperation" class="col-sm-4 col-form-label">Operation</label>
+                <div class="col-sm-8 float-right">
+                  <select class="form-control border-purple" id="objectOperation" name="operationName"
+                    [(ngModel)]="subAct.operationName">
+                    <option value="" selected></option>
+                    <ng-container *ngFor="let o of obj.tabObjects">
+                      <ng-container *ngIf="o.name==subAct.objectName">
+                        <option *ngFor="let op of o.operations">{{op.name}}</option>
+                      </ng-container>
+                    </ng-container>
+                  </select>
+                </div>    
+              </div>
+
+
+              
+             
+              <div class="form-group row" *ngIf="obj.getBodyAttributeName(subAct.objectName, subAct.operationName)!=null">
+                <label for="bodyValue"
+                  class="col-sm-4 col-form-label">{{obj.getBodyAttributeName(subAct.objectName, subAct.operationName)}}</label>
+                <div class="col-sm-8">
+                  <input *ngIf="obj.getAttributeType(subAct.objectName, obj.getBodyAttributeName(subAct.objectName, subAct.operationName))=='String'"
+                    type="text" placeholder="Value" class="form-control border-purple" id="bodyValue" name="bodyValue"
+                    [(ngModel)]="subAct.bodyValue">
+                  <input *ngIf="obj.getAttributeType(subAct.objectName, obj.getBodyAttributeName(subAct.objectName, subAct.operationName))=='int'" 
+                    type="range" class="custom-range custom-range-fuchsia col-sm-12 mt-3" id="customRange1" min='0' max="15" value="0" step="1"
+                    name="bodyValue" [(ngModel)]="subAct.bodyValue">&nbsp;&nbsp;{{subAct.bodyValue}}
+                  <select class="form-control border-purple" *ngIf="obj.getAttributeType(subAct.objectName, obj.getBodyAttributeName(subAct.objectName, subAct.operationName)).includes('Enumeration')"
+                    placeholder="Value" id="bodyValue" name="bodyValue" [(ngModel)]="subAct.bodyValue">
+                    <option value="" selected></option>
+                    <option value="{{pv}}" *ngFor="let pv of obj.getAttributePossibleValues(subAct.objectName, obj.getBodyAttributeName(subAct.objectName, subAct.operationName))">{{pv}}
+                    </option>
+                  </select>
+                </div>
+              </div>
+
+
+              <div class="form-group row" *ngIf="subAct.type=='Created activity'">
+                <label for="activityCreatedName" class="col-sm-4 col-form-label">Activity name</label>
+                <div class="col-sm-8">
+                  <select class="form-control border-purple" id="activityCreatedName" name="activityCreatedName"
+                    [(ngModel)]="subAct.name">
+                    <option value="" selected></option>
+                    <option *ngFor="let a of acts.getCreatedActivities(); let i = index;">{{a}}</option>                    </select>
+                </div>
+
+              </div>
+
+              <div class="form-group row mx-auto" *ngIf="subAct.type=='New Activity'">
+                <label for="After2" class="col-sm-4 col-form-label">Wait for</label>
+              <div class="col-sm-3">
+                <input type="number" min="0" placeholder="Min" class="form-control inupt-transparent" id="timeout" name="timeout"
+                  [(ngModel)]="subAct.timeout">
+              </div>
+              <label class="col-sm-5 col-form-label">minutes to execute it</label>
+              
+              </div>
+
+              <div class="form-group row">
+                <button type="reset" class="btn btn-lg btn-transparent txt-white mx-auto">Reset</button>
+                <button *ngIf="subActAllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" data-dismiss="modal" (click)="addNewSubActivity()">Add</button>
+                <button *ngIf="!subActAllFieldsAreWellFilled()" type="submit" class="btn btn-lg  btn-transparent txt-white mx-auto" disabled>Add</button>
+              </div>
+
+            </div>
+
+            <!-- /.card-body -->
+          </form>
+        </div>
+        <!-- /.card -->
+
+
+      </div>
+
+
+    </div>
+    <!-- /.modal-content -->
+
+  </div>
+  <!-- /.modal-dialog -->    
+</div>
+<!-- /.modal -->
+
+
+
+
+
+
+
+
+
+
+
