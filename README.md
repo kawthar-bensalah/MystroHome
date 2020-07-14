@@ -1,6 +1,48 @@
-MystroHome, your number one source for smart home control. We're dedicated to giving you the very best app to orchestrate all your connected devices at home, with a focus on confort, time-saving and uniqueness.
-Developped in 2020 by BENSALAH Kawthar and ABBACI Khaled, students of The University of Science and Technology HOUARI BOUMEDIENE (USTHB), in the context of their graduation project.
-MystroHome allows you to control all your home appliances including refrigerator, washer, air conditioner, alarm, bulbs and more through your smartphone or computer.
-You will be able to create many domotic scenarios that start at the time of your choice.
-We hope you enjoy our app as much as we enjoy offering them to you. If you have any questions or comments, please don't hesitate to contact us.
-Sincerely,
+# MystroHome
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/KontRol/master/rsz_11logo.png)
+
+
+Web of Things based system including a client application to create and execute domotic scenarios in a smarthouse. 
+
+## Description
+
+MystroHome is developped to orchestrate all connected devices at home, with a focus on confort, time-saving and uniqueness. It's possible to control all  home appliances including refrigerator, washer, air conditioner, alarm, bulbs and more through a smartphone or a computer throw this app. It includes a BPEL process editing tool orchestrating the services offered by smart objects. This tool is able to execute these process so that users observe the result on the objects concerned. Every BPEL process is associated to a domotic scenario that start at the time of user's choice.
+
+## Getting Started
+
+### Requirements
+
+* Windows/Linux/Mac OS.
+* Eclipse IDE.
+* Java Development Kit (JDK).
+* Spring Boot framework.
+* AngularJS.
+* MongoDB (database).
+
+### Executing program
+
+* Preparation of the database
+
+1 - Access to MongoDB
+2 - Create a SmartHomeDB database
+3 - Create three collections: Scenarios, Users and Objects
+
+* NetBeans IDE.
+
+## Screenshots
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/KontRol/master/screen3.PNG)
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/KontRol/master/screen4.PNG)
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/KontRol/master/screen5.PNG)
+
+
+
+
+## Authors
+
+BENSALAH Kawthar 
+bensalahkawthar9@gmail.com
+
