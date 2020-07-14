@@ -25,8 +25,8 @@ MystroHome is developped to orchestrate all connected devices at home, with a fo
 * Preparation of the database
 
 1 - Access to MongoDB  
-2 - Create a SmartHomeDB database
-3 - Create three collections: Scenarios, Users and Objects
+2 - Create a SmartHomeDB database  
+3 - Create three collections: Scenarios, Users and Objects.
 
 * NetBeans IDE.
 
