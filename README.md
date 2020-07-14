@@ -28,7 +28,38 @@ MystroHome is developped to orchestrate all connected devices at home, with a fo
 2 - Create a SmartHomeDB database  
 3 - Create three collections: Scenarios, Users and Objects.
 
-* NetBeans IDE.
+* SmartHomeDB Web Service 
+
+- Launch the data service ( SmartHomeDB )
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen12.PNG)
+
+* Android Apps
+
+- Launch the three Android Applications from Android Studio.
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen13.PNG)
+
+- Set the IP address displayed in each application to the Application.java class of the corresponding WS. 
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen14.PNG)
+
+* WebServices associated to Objects 
+
+- Launch the three Web services (WS Alarm , WS Bulb, WS TV)
+
+* Mediator WebService
+
+- Launch the Mediator (Mediateur)
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen15.PNG)
+
+* Client App
+
+- Launch the client application (Angular Project)
+
+![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen16.PNG)
+
 
 ## Screenshots
 
