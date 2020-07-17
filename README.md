@@ -76,6 +76,6 @@ MystroHome is developped to orchestrate all connected devices at home, with a fo
 
 ## Authors
 
-BENSALAH Kawthar 
-bensalahkawthar9@gmail.com
+This project is Developped by BENSALAH Kawthar and ABBACI Khaled, under the supervision of Mrs BOUYAKOUB and Mrs MEZENNER, in the context of their graduation project at The University of Science and Technology HOUARI BOUMEDIENE (USTHB).
 
+bensalahkawthar9@gmail.com
