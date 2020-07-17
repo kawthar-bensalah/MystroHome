@@ -72,9 +72,9 @@ MystroHome is developped to orchestrate all connected devices at home, with a fo
 ![alt text](https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen11.PNG width="100")
 
 <p float="left>
-<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen9.PNG" width="300">
-<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen10.PNG" width="300">
-<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen11.PNG" width="300">
+<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen9.PNG" width="300" />
+<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen10.PNG" width="300" />
+<img src="https://raw.githubusercontent.com/kawthar-bensalah/MystroHome/master/screen11.PNG" width="300" />
  </p>
 ## Authors
 
